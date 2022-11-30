@@ -15,7 +15,7 @@ import { useHoldingList } from "../../swr-cache/useHoldingList";
 import { AccordionHolding } from "../Accordion/AccordionHolding";
 import { Buttons } from "../Button/Button";
 import { DialogAddUmkmToHolding } from "../Dialog/DialogAddUmkmToHolding";
-import { DialogCreateUmkm } from "../Dialog/DialogCreateUmkm";
+import { DialogDetailUmkm } from "../Dialog/DialogDetailUmkm";
 
 interface Props {
   value: number;
@@ -27,16 +27,6 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
   const [dialogAddUmkm, setDialogAddUmkm] = useState(false);
   const [idHolding, setIdHolding] = useState<number>();
   const [umkmName, setUmkmName] = useState<string>("");
-
-  // const handleUmkm = (event: SelectChangeEvent) => {
-  //   setSelectedUmkm(event.target.value);
-  //   setDialogAdd(true);
-  //   console.log(event.target.value);
-  // };
-
-  // const handleCreate = () => {
-  //   setDialogCreate(true);
-  // };
 
   const handleDialogAdd = (id: number, name: string) => {
     setUmkmName(name);

@@ -1,18 +1,18 @@
 import useSWR from "swr";
-import { fetchUmkmHoldingById } from "../repositories/repo";
+import { fetchUmkmById } from "../repositories/repo";
 
-export const useUmkmbyId = (id: number) => {
+export const useUmkmById = (id: number) => {
   const {
-    data: umkms,
+    data: umkmById,
     mutate,
     error,
-  } = useSWR([`/holding/${id}`, id], (url, id) => fetchUmkmHoldingById(id));
+  } = useSWR([`/umkm/${id}`, id], (url, id) => fetchUmkmById(id));
 
-  const loading = !umkms && !error;
-  // console.log(umkms);
+  const loading = !umkmById && !error;
+  //   console.log(umkmById);
 
   return {
-    umkms,
+    umkmById,
     loading,
     mutate,
     error,

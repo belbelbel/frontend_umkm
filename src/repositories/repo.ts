@@ -4,6 +4,7 @@ import {
   ListHolding,
   ListHoldings,
   ListUmkm,
+  ListUmkms,
   PivotHolding,
   Umkm,
   User,
@@ -58,6 +59,22 @@ export const fetchUmkm = async () => {
   try {
     const res = await apiEcom.get<ListUmkm>("/umkm");
     // console.log(res.data.data);
+    // console.log(res);
+    return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchUmkmById = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ListUmkms>(`/umkm/${id}`);
+    // const resData = res.data.data.map((i) => i.umkms);
+    // console.log(res.data.data);
+    // console.log(id);
     // console.log(res);
     return res.data.data;
   } catch (error: any | AxiosError) {

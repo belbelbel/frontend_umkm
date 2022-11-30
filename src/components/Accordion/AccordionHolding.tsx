@@ -6,8 +6,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useUmkmbyId } from "../../swr-cache/useUmkmbyId";
+import { useUmkmByHolding } from "../../swr-cache/useUmkmByHolding";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
+import { DialogDetailUmkm } from "../Dialog/DialogDetailUmkm";
 
 interface Props {
   id: number;
@@ -16,13 +17,16 @@ interface Props {
 
 export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
   const { umkm } = useUmkmList();
-  const { umkms } = useUmkmbyId(id);
-  const [selectedId, setSelectedId] = useState<number>(0);
+  const { umkms } = useUmkmByHolding(id);
+  const [selectedId, setSelectedId] = useState<number>();
+  const [selectedName, setSelectedName] = useState<string>("");
   const [detailUmkm, setDetailUmkm] = useState(false);
 
-  const handleDetailUmkm = (idUmkm: number) => {
+  const handleDetailUmkm = (idUmkm: number, name: string) => {
     setSelectedId(idUmkm);
+    setSelectedName(name);
     setDetailUmkm(true);
+    console.log(selectedId);
   };
 
   return (
@@ -39,12 +43,21 @@ export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
             <Typography>{i.nama_umkm}</Typography>
           </AccordionSummary>
           <Tooltip title="lihat">
-            <IconButton onClick={() => handleDetailUmkm(i.id)}>
+            <IconButton onClick={() => handleDetailUmkm(i.id, i.nama_umkm)}>
               <i className="bx bx-show" />
             </IconButton>
           </Tooltip>
         </Stack>
       ))}
+      <DialogDetailUmkm
+        open={detailUmkm}
+        id={selectedId}
+        parent={selectedName}
+        onClose={() => {
+          setDetailUmkm(false);
+          setSelectedId(0);
+        }}
+      />
       {/* {umkm
         ?.filter((x) => x.parent_id === id)
         .map((y) => (

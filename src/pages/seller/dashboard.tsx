@@ -24,7 +24,7 @@ import { TabUmkm } from "../../components/DashboardTab/TabUmkm";
 import { DialogAddUmkmToHolding } from "../../components/Dialog/DialogAddUmkmToHolding";
 import { fetchUmkm } from "../../repositories/repo";
 import { useHoldingList } from "../../swr-cache/useHoldingList";
-import { useUmkmbyId } from "../../swr-cache/useUmkmbyId";
+import { useUmkmbyId } from "../../swr-cache/useUmkmByHolding";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { Umkm } from "../../types/models";
 

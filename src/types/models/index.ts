@@ -17,12 +17,21 @@ export interface Umkm {
   alamat: string;
   no_telp_umkm: string;
   parent_id?: number;
+  produks_count: number;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface ListUmkm {
   code: number;
   message: string;
   data: Umkm[];
+}
+
+export interface ListUmkms {
+  code: number;
+  message: string;
+  data: Umkm;
 }
 
 //Holding

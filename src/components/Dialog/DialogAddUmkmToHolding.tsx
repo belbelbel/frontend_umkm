@@ -17,7 +17,7 @@ import {
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { addUmkmToHolding } from "../../repositories/repo";
-import { useUmkmbyId } from "../../swr-cache/useUmkmbyId";
+import { useUmkmByHolding } from "../../swr-cache/useUmkmByHolding";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { Buttons } from "../Button/Button";
 import { LoadingButtons } from "../Button/LoadingButton";
@@ -36,7 +36,7 @@ export const DialogAddUmkmToHolding: React.FC<Props> = ({
   onClose,
 }) => {
   const { umkm } = useUmkmList();
-  const { umkms } = useUmkmbyId(holdingId);
+  const { umkms } = useUmkmByHolding(holdingId);
   const [selectedUmkm, setSelectedUmkm] = useState("");
 
   const handleUmkm = (event: SelectChangeEvent) => {

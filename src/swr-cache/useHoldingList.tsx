@@ -5,7 +5,7 @@ export const useHoldingList = () => {
   const { data, error, mutate } = useSWR("/holding", fetchHolding);
 
   const loading = !data && !error;
-  console.log(data);
+  // console.log(data);
 
   return {
     holding: data,
