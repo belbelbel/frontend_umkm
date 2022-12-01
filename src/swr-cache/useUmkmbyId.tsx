@@ -9,7 +9,6 @@ export const useUmkmById = (id: number) => {
   } = useSWR([`/umkm/${id}`, id], (url, id) => fetchUmkmById(id));
 
   const loading = !umkmById && !error;
-  //   console.log(umkmById);
 
   return {
     umkmById,

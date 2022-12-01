@@ -12,6 +12,8 @@ import {
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useHoldingList } from "../../swr-cache/useHoldingList";
+// import { useUmkmByHolding } from "../../swr-cache/useUmkmByHolding";
+import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { AccordionHolding } from "../Accordion/AccordionHolding";
 import { Buttons } from "../Button/Button";
 import { DialogAddUmkmToHolding } from "../Dialog/DialogAddUmkmToHolding";
@@ -32,6 +34,7 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
     setUmkmName(name);
     setIdHolding(id);
     setDialogAddUmkm(true);
+    console.log(id);
   };
 
   return (
@@ -66,7 +69,6 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
         </Stack>
 
         {holding?.map((item, index) => {
-          // const { umkms } = useUmkmList(item.id)
           return (
             <>
               <Accordion>
@@ -86,7 +88,6 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
                 <>
                   <AccordionHolding id={item.id} nama_umkm={item.nama} />
                 </>
-
                 <>
                   <Buttons
                     size="small"

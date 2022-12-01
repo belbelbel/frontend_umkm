@@ -17,7 +17,8 @@ import {
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { addUmkmToHolding } from "../../repositories/repo";
-import { useUmkmByHolding } from "../../swr-cache/useUmkmByHolding";
+import { useHoldingId } from "../../swr-cache/useHoldingId";
+import { useUmkmByHoldingId } from "../../swr-cache/useUmkmByHoldingId";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { Buttons } from "../Button/Button";
 import { LoadingButtons } from "../Button/LoadingButton";
@@ -36,13 +37,18 @@ export const DialogAddUmkmToHolding: React.FC<Props> = ({
   onClose,
 }) => {
   const { umkm } = useUmkmList();
-  const { umkms } = useUmkmByHolding(holdingId);
+  const { umkmByHolding } = useUmkmByHoldingId(holdingId);
   const [selectedUmkm, setSelectedUmkm] = useState("");
 
   const handleUmkm = (event: SelectChangeEvent) => {
     setSelectedUmkm(event.target.value);
     console.log(event.target.value);
   };
+
+  // const filteredUmkm = umkm?.filter((i) => !umkmByHolding?.includes(i));
+  const filteredUmkm = umkm?.filter(
+    ({ id: id1 }) => !umkmByHolding?.some(({ id: id2 }) => id2 === id1)
+  );
 
   return (
     <>
@@ -88,22 +94,21 @@ export const DialogAddUmkmToHolding: React.FC<Props> = ({
                     <Select
                       value={selectedUmkm}
                       label="Umkm"
-                      // onChange={(event) => {
-                      //   setFieldValue("umkm_id", event.target.value);
-                      //   console.log(values.umkm_id);
-                      // }}
                       onChange={handleUmkm}
                     >
-                      {umkm
+                      {/* {umkm
                         ?.filter((x) => x.parent_id !== holdingId)
                         .map((y) => (
                           <MenuItem key={y.id} value={y.id}>
                             {y.nama_umkm}
                           </MenuItem>
-                        ))}
-                      {/* {umkms?.map((i) =>
-                        i.pivot.filter((x) => x.holding_id !== holdingId)
-                      )} */}
+                        ))} */}
+
+                      {filteredUmkm?.map((x) => (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.nama_umkm}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Stack>

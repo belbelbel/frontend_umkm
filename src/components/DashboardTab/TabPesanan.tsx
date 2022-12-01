@@ -34,7 +34,7 @@ export const TabPesanan: React.FC<Props> = ({ value }) => {
             marginTop: 3,
             position: "sticky",
             overflow: "auto",
-            zIndex: 5,
+            zIndex: 3,
             top: 150,
             left: 0,
             "&.MuiTab-wrapper": {

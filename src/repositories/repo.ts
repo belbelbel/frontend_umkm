@@ -69,13 +69,28 @@ export const fetchUmkm = async () => {
   }
 };
 
+//useUmkmByHoldingId
+export const fetchUmkmHolding = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ListUmkm>("/umkm", {
+      params: {
+        holding_id: id,
+      },
+    });
+    // console.log(res.data.data);
+    // console.log(res);
+    return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
 export const fetchUmkmById = async (id: number) => {
   try {
     const res = await apiEcom.get<ListUmkms>(`/umkm/${id}`);
-    // const resData = res.data.data.map((i) => i.umkms);
-    // console.log(res.data.data);
-    // console.log(id);
-    // console.log(res);
     return res.data.data;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {
@@ -113,13 +128,11 @@ export const fetchHolding = async () => {
   }
 };
 
-export const fetchUmkmHoldingById = async (id: number) => {
+export const fetchHoldingId = async (id: number) => {
   try {
     const res = await apiEcom.get<ListHoldings>(`/holding/${id}`);
-    // const resData = res.data.data.map((i) => i.umkms);
-    // console.log(res.data.data);
-    // console.log(id);
-    // console.log(res);
+    console.log(res.data.data.umkms);
+    console.log(res);
     return res.data.data.umkms;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {
@@ -128,6 +141,19 @@ export const fetchUmkmHoldingById = async (id: number) => {
     throw error;
   }
 };
+
+// export const fetchUmkmHoldingById = async (id: number) => {
+//   try {
+//     const res = await apiEcom.get<ListHoldings>(`/holding/${id}`);
+//     console.log(res.data.data.umkms);
+//     return res.data.data.umkms;
+//   } catch (error: any | AxiosError) {
+//     if (axios.isAxiosError(error)) {
+//       throw error.response;
+//     }
+//     throw error;
+//   }
+// };
 
 // export const fetchUmkmHoldingById = async (id: number) => {
 //   try {

@@ -24,28 +24,16 @@ import { TabUmkm } from "../../components/DashboardTab/TabUmkm";
 import { DialogAddUmkmToHolding } from "../../components/Dialog/DialogAddUmkmToHolding";
 import { fetchUmkm } from "../../repositories/repo";
 import { useHoldingList } from "../../swr-cache/useHoldingList";
-import { useUmkmbyId } from "../../swr-cache/useUmkmByHolding";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { Umkm } from "../../types/models";
 
 const DashboardSeller = () => {
   const router = useRouter();
-  const { umkm } = useUmkmList();
-  const { holding } = useHoldingList();
 
   const [tab, setTab] = useState(1);
-  const [dialogAddUmkm, setDialogAddUmkm] = useState(false);
-  const [idHolding, setIdHolding] = useState<number>();
-  const [umkmName, setUmkmName] = useState<string>("");
 
   const handleTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
-  };
-
-  const handleDialog = (id: number, name: string) => {
-    setUmkmName(name);
-    setIdHolding(id);
-    setDialogAddUmkm(true);
   };
 
   return (
