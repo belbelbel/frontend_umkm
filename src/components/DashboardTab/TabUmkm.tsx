@@ -3,17 +3,17 @@ import {
   Accordion,
   AccordionSummary,
   Box,
+  IconButton,
   SelectChangeEvent,
   Stack,
   Tab,
   Tabs,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useHoldingList } from "../../swr-cache/useHoldingList";
-// import { useUmkmByHolding } from "../../swr-cache/useUmkmByHolding";
-import { useUmkmList } from "../../swr-cache/useUmkmList";
 import { AccordionHolding } from "../Accordion/AccordionHolding";
 import { Buttons } from "../Button/Button";
 import { DialogAddUmkmToHolding } from "../Dialog/DialogAddUmkmToHolding";
@@ -81,8 +81,47 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
                   }
                 >
                   <Stack direction="row">
-                    <Typography>{index + 1}</Typography>
-                    <Typography marginLeft={8}>{item.nama}</Typography>
+                    <Stack direction="row">
+                      <Typography>{index + 1}</Typography>
+                      <Typography
+                        marginLeft={8}
+                        marginRight={15}
+                        width={800}
+                        fontWeight={600}
+                      >
+                        {item.nama}
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row">
+                      <Tooltip title="lihat">
+                        <IconButton
+                          onClick={() =>
+                            router.push(`/seller/holding/${item.id.toString()}`)
+                          }
+                        >
+                          <i
+                            className="bx bx-show"
+                            style={{ fontSize: "20px" }}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="edit">
+                        <IconButton>
+                          <i
+                            className="bx bx-edit"
+                            style={{ fontSize: "20px" }}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="hapus">
+                        <IconButton>
+                          <i
+                            className="bx bx-trash"
+                            style={{ fontSize: "20px" }}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
                   </Stack>
                 </AccordionSummary>
                 <>
@@ -96,7 +135,7 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
                     sx={{
                       marginLeft: 10.5,
                       px: 2,
-                      marginBottom: 5,
+                      marginBottom: 1,
                       marginTop: 2,
                     }}
                     onClick={() => handleDialogAdd(item.id, item.nama)}

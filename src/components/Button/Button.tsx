@@ -14,6 +14,7 @@ export const Buttons: React.FC<CustomProps> = ({ variation, sx, ...props }) => (
       borderRadius: "100px",
       color: variation === "contained" ? "#FFFFFF" : "#000000",
       px: 5,
+      py: 1,
       boxShadow: "none",
       border: "1px solid #000000",
       "&:hover": {

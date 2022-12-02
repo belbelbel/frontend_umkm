@@ -60,7 +60,6 @@ export interface Holding {
   created_at: Date;
   updated_at: Date;
   umkms_count: number;
-  umkms: UmkmInHolding[];
 }
 
 export interface ListHolding {

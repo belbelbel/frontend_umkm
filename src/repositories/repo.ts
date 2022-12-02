@@ -131,9 +131,9 @@ export const fetchHolding = async () => {
 export const fetchHoldingId = async (id: number) => {
   try {
     const res = await apiEcom.get<ListHoldings>(`/holding/${id}`);
-    console.log(res.data.data.umkms);
-    console.log(res);
-    return res.data.data.umkms;
+    // console.log(res.data.data);
+    // console.log(res);
+    return res.data.data;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {
       throw error.response;

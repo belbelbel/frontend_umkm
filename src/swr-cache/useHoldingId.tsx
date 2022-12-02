@@ -3,15 +3,15 @@ import { fetchHoldingId } from "../repositories/repo";
 
 export const useHoldingId = (id: number) => {
   const {
-    data: umkms,
+    data: holdingDetail,
     mutate,
     error,
   } = useSWR([`/holding/${id}`, id], (url, id) => fetchHoldingId(id));
 
-  const loading = !umkms && !error;
+  const loading = !holdingDetail && !error;
 
   return {
-    umkms,
+    holdingDetail,
     loading,
     mutate,
     error,

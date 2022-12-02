@@ -34,7 +34,6 @@ export const CreateSellerAppBar: React.FC = () => {
           justifyContent="space-between"
         >
           <Link
-            onClick={() => router.push("/")}
             underline="none"
             sx={{
               "&:hover": {

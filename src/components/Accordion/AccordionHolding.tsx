@@ -43,23 +43,23 @@ export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
           <AccordionSummary key={i.id}>
             <Typography>{i.nama_umkm}</Typography>
           </AccordionSummary>
-          <Stack direction="row" spacing={0.5}>
+          {/* <Stack direction="row" spacing={0}>
             <Tooltip title="lihat">
               <IconButton onClick={() => handleDetailUmkm(i.id, i.nama_umkm)}>
-                <i className="bx bx-show" />
+                <i className="bx bx-show" style={{ fontSize: "20px" }} />
               </IconButton>
             </Tooltip>
             <Tooltip title="edit">
               <IconButton onClick={() => handleDetailUmkm(i.id, i.nama_umkm)}>
-                <i className="bx bx-edit" />
+                <i className="bx bx-edit" style={{ fontSize: "18px" }} />
               </IconButton>
             </Tooltip>
             <Tooltip title="hapus">
               <IconButton onClick={() => handleDetailUmkm(i.id, i.nama_umkm)}>
-                <i className="bx bx-trash" />
+                <i className="bx bx-trash" style={{ fontSize: "18px" }} />
               </IconButton>
             </Tooltip>
-          </Stack>
+          </Stack> */}
         </Stack>
       ))}
       <DialogDetailUmkm
