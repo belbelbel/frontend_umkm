@@ -15,11 +15,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { addUmkmToHolding } from "../../repositories/repo";
+import { KeyedMutator, mutate } from "swr";
+import {
+  addUmkmToHolding,
+  fetchHolding,
+  fetchUmkmHolding,
+} from "../../repositories/repo";
 import { useHoldingId } from "../../swr-cache/useHoldingId";
 import { useUmkmByHoldingId } from "../../swr-cache/useUmkmByHoldingId";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
+import { Holding } from "../../types/models";
 import { Buttons } from "../Button/Button";
 import { LoadingButtons } from "../Button/LoadingButton";
 
@@ -28,6 +35,8 @@ interface Props {
   holdingId: number;
   open: boolean;
   onClose: () => void;
+  succes: () => void;
+  mutate: KeyedMutator<Holding[] | undefined>;
 }
 
 export const DialogAddUmkmToHolding: React.FC<Props> = ({
@@ -35,7 +44,9 @@ export const DialogAddUmkmToHolding: React.FC<Props> = ({
   umkm_parent,
   open,
   onClose,
+  succes,
 }) => {
+  const router = useRouter();
   const { umkm } = useUmkmList();
   const { umkmByHolding } = useUmkmByHoldingId(holdingId);
   const [selectedUmkm, setSelectedUmkm] = useState("");
@@ -59,6 +70,10 @@ export const DialogAddUmkmToHolding: React.FC<Props> = ({
           setSubmitting(true);
           try {
             addUmkmToHolding(holdingId, { umkm_id: parseInt(selectedUmkm) });
+            const holdings = await fetchUmkmHolding(holdingId);
+            mutate(holdings);
+            onClose();
+            router.push("/seller/dashboard");
           } catch (error: any) {
             console.log(error);
           } finally {

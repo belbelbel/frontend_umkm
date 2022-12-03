@@ -13,14 +13,14 @@ import { Buttons } from "../Button/Button";
 
 interface DialogProps {
   id: number;
-  parent: string;
+  name: string;
   open: boolean;
   onClose: () => void;
 }
 
 export const DialogEditHolding: React.FC<DialogProps> = ({
   id,
-  parent,
+  name,
   open,
   onClose,
 }) => {
@@ -29,38 +29,31 @@ export const DialogEditHolding: React.FC<DialogProps> = ({
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle marginBottom={1} sx={{ py: 3, px: 3 }}>
         <Typography variant="body1" fontWeight={600}>
-          Detail UMKM
+          Edit Holding
         </Typography>
       </DialogTitle>
       <DialogContent sx={{ py: 3, px: 3 }}>
         <>
-          <Stack direction="column" spacing={4}>
-            <Stack direction="row" spacing={30}>
-              <Stack direction="column" spacing={1}>
-                <Typography variant="caption" color="GrayText">
-                  Nama Umkm
-                </Typography>
-                <Typography variant="body1">{umkmById?.nama_umkm}</Typography>
-              </Stack>
-              <Stack direction="column" spacing={1}>
-                <Typography variant="caption" color="GrayText">
-                  Parent
-                </Typography>
-                <Typography variant="body1">{parent}</Typography>
-              </Stack>
-            </Stack>
-
-            <TextField disabled value={umkmById?.alamat} label="Alamat" />
-            <TextField
-              disabled
-              value={umkmById?.no_telp_umkm}
-              label="Nomer Teelpon"
-            />
+          <Stack direction="column" spacing={4} marginTop={2}>
+            <TextField value={name} label="Nama" />
           </Stack>
         </>
       </DialogContent>
       <DialogActions sx={{ py: 3, px: 3 }}>
-        <Buttons variation="contained" onClick={onClose}>
+        <Buttons
+          variation="outlined"
+          size="medium"
+          sx={{ py: 1, px: 2, width: 120, height: 40 }}
+        >
+          Simpan
+        </Buttons>
+
+        <Buttons
+          variation="contained"
+          onClick={onClose}
+          size="medium"
+          sx={{ py: 1, px: 2, width: 120, height: 40 }}
+        >
           Tutup
         </Buttons>
       </DialogActions>

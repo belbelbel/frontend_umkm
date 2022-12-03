@@ -73,3 +73,21 @@ export interface ListHoldings {
   message: string;
   data: Holding;
 }
+
+//Product
+export interface ListProduct {
+  code: number;
+  message: string;
+  data: Product;
+}
+export interface Product {
+  id: number;
+  umkm_id: number;
+  nama: string;
+  harga: string;
+  diskon: string;
+  deleted_at: Date;
+  created_at: Date;
+  updated_at: Date;
+  umkm: Umkm;
+}

@@ -1,6 +1,7 @@
 import { TabList, TabPanel } from "@mui/lab";
 import {
   Accordion,
+  AccordionDetails,
   AccordionSummary,
   Box,
   IconButton,
@@ -18,6 +19,7 @@ import { AccordionHolding } from "../Accordion/AccordionHolding";
 import { Buttons } from "../Button/Button";
 import { DialogAddUmkmToHolding } from "../Dialog/DialogAddUmkmToHolding";
 import { DialogDetailUmkm } from "../Dialog/DialogDetailUmkm";
+import { DialogEditHolding } from "../Dialog/DialogEditHolding";
 
 interface Props {
   value: number;
@@ -25,16 +27,23 @@ interface Props {
 
 export const TabUmkm: React.FC<Props> = ({ value }) => {
   const router = useRouter();
-  const { holding } = useHoldingList();
+  const { holding, mutate } = useHoldingList();
   const [dialogAddUmkm, setDialogAddUmkm] = useState(false);
   const [idHolding, setIdHolding] = useState<number>();
   const [umkmName, setUmkmName] = useState<string>("");
+  const [dialogEditHolding, setDialogEditHolding] = useState(false);
 
   const handleDialogAdd = (id: number, name: string) => {
     setUmkmName(name);
     setIdHolding(id);
     setDialogAddUmkm(true);
     console.log(id);
+  };
+
+  const handleEditHolding = (id: number, name: string) => {
+    setIdHolding(id);
+    setUmkmName(name);
+    setDialogEditHolding(true);
   };
 
   return (
@@ -86,76 +95,72 @@ export const TabUmkm: React.FC<Props> = ({ value }) => {
                       <Typography
                         marginLeft={8}
                         marginRight={15}
-                        width={800}
                         fontWeight={600}
                       >
                         {item.nama}
                       </Typography>
                     </Stack>
-                    <Stack direction="row">
-                      <Tooltip title="lihat">
-                        <IconButton
-                          onClick={() =>
-                            router.push(`/seller/holding/${item.id.toString()}`)
-                          }
-                        >
-                          <i
-                            className="bx bx-show"
-                            style={{ fontSize: "20px" }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="edit">
-                        <IconButton>
-                          <i
-                            className="bx bx-edit"
-                            style={{ fontSize: "20px" }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="hapus">
-                        <IconButton>
-                          <i
-                            className="bx bx-trash"
-                            style={{ fontSize: "20px" }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                    </Stack>
                   </Stack>
                 </AccordionSummary>
-                <>
+                <AccordionDetails sx={{ px: 9 }}>
                   <AccordionHolding id={item.id} nama_umkm={item.nama} />
-                </>
-                <>
-                  <Buttons
-                    size="small"
-                    variation="outlined"
-                    startIcon={<i className="bx bx-plus" />}
-                    sx={{
-                      marginLeft: 10.5,
-                      px: 2,
-                      marginBottom: 1,
-                      marginTop: 2,
-                    }}
-                    onClick={() => handleDialogAdd(item.id, item.nama)}
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ marginTop: 3, marginBottom: 2 }}
                   >
-                    Tambah Umkm
-                  </Buttons>
-                </>
-
-                <Stack sx={{ marginBottom: 10 }}>
-                  <DialogAddUmkmToHolding
-                    holdingId={idHolding}
-                    umkm_parent={umkmName}
-                    open={dialogAddUmkm}
-                    onClose={() => setDialogAddUmkm(false)}
-                  />
-                </Stack>
+                    <Buttons
+                      variation="contained"
+                      startIcon={<i className="bx bx-plus" />}
+                      size="medium"
+                      sx={{
+                        py: 1,
+                        px: 2,
+                        width: 160,
+                        height: 35,
+                      }}
+                      onClick={() => handleDialogAdd(item.id, item.nama)}
+                    >
+                      Tambah Umkm
+                    </Buttons>
+                    <Buttons
+                      variation="contained"
+                      startIcon={<i className="bx bx-edit" />}
+                      size="medium"
+                      sx={{
+                        py: 1,
+                        px: 2,
+                        width: 160,
+                        height: 35,
+                        marginTop: 3,
+                        marginBottom: 2,
+                      }}
+                      onClick={() => handleEditHolding(item.id, item.nama)}
+                    >
+                      Edit Holding
+                    </Buttons>
+                  </Stack>
+                </AccordionDetails>
               </Accordion>
             </>
           );
         })}
+        <DialogAddUmkmToHolding
+          holdingId={idHolding}
+          key={idHolding}
+          open={dialogAddUmkm}
+          succes={() => setDialogAddUmkm(false)}
+          onClose={() => {
+            setDialogAddUmkm(false);
+          }}
+          mutate={mutate}
+        />
+        <DialogEditHolding
+          id={idHolding}
+          name={umkmName}
+          onClose={() => setDialogEditHolding(false)}
+          open={dialogEditHolding}
+        />
       </TabPanel>
     </Box>
   );
