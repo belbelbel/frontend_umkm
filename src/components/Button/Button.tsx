@@ -23,6 +23,11 @@ export const Buttons: React.FC<CustomProps> = ({ variation, sx, ...props }) => (
         color: variation === "contained" ? "#FFFFFF" : "#5C4EBD",
         boxShadow: "none",
       },
+      "&:disabled": {
+        backgroundColor: "#FFFFFF",
+        color: "GrayText",
+        border: "none",
+      },
       ...sx,
     }}
     {...props}

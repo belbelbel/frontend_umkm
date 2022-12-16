@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Stack,
   Container,
@@ -13,6 +13,7 @@ import { login } from "../repositories/repo";
 import { LoadingButtons } from "../components/Button/LoadingButton";
 import { AuthAppBar } from "../components/AppBar/AuthAppBar";
 import { useRouter } from "next/router";
+import { useUser } from "../swr-cache/useUser";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Email harus valid").required("Email harus diisi"),
@@ -21,6 +22,18 @@ const validationSchema = Yup.object({
 
 const Login = () => {
   const router = useRouter();
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/home");
+    }
+  }, [router, user]);
+
+  if (user) {
+    return <></>;
+  }
+
   return (
     <Box>
       <AuthAppBar />

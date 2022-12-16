@@ -18,10 +18,14 @@ import React from "react";
 import logo from "../../../public/images/logo.png";
 import { useRouter } from "next/router";
 import { logout } from "../../repositories/repo";
+import { useUser } from "../../swr-cache/useUser";
+import { DialogAlert } from "../Dialog/DialogAlert";
 
 export const MainAppBar: React.FC = () => {
   const router = useRouter();
+  const { user, loggedOut, mutate } = useUser();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [dialogAlert, setDialogAlert] = React.useState(false);
   const open = Boolean(anchorEl);
 
   const handleOpenMyAccount = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,7 +38,10 @@ export const MainAppBar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      setDialogAlert(false);
       await logout();
+      mutate();
+      router.reload();
     } catch (e) {
     } finally {
       router.push("/");
@@ -65,21 +72,21 @@ export const MainAppBar: React.FC = () => {
           </Link>
           <Stack direction="row" spacing={2}>
             <Tooltip title="Keranjang">
-              <IconButton>
+              <IconButton onClick={() => router.push("/buyer/cart")}>
                 <i className="bx bx-basket" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Notifikasi">
+            <Tooltip title="Status pembelian">
               <IconButton>
-                <i className="bx bx-bell" />
+                <i className="bx bx-package" style={{ fontSize: "25px" }} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Pesan">
+            {/* <Tooltip title="Pesan">
               <IconButton>
                 <i className="bx bx-message-square-dots" />
               </IconButton>
-            </Tooltip>
-            <Tooltip title="My Account">
+            </Tooltip> */}
+            <Tooltip title="Akun saya">
               <IconButton onClick={handleOpenMyAccount}>
                 <i className="bx bx-user-circle" />
               </IconButton>
@@ -89,13 +96,17 @@ export const MainAppBar: React.FC = () => {
               open={open}
               onClose={handleCloseMyAccount}
             >
-              <MenuItem>Profil</MenuItem>
-              <MenuItem>Pembelian saya</MenuItem>
+              <MenuItem>
+                <Stack direction="column">
+                  <>Halo, </>
+                  <>{user?.nama}</>
+                </Stack>
+              </MenuItem>
               <Divider />
               <MenuItem onClick={() => router.push("/seller/dashboard")}>
                 Mode Penjual
               </MenuItem>
-              <MenuItem onClick={handleLogout}>
+              <MenuItem onClick={() => setDialogAlert(true)}>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <i className="bx bx-log-out" />
                   <Typography>Keluar</Typography>
@@ -105,6 +116,15 @@ export const MainAppBar: React.FC = () => {
           </Stack>
         </Stack>
       </Container>
+      <DialogAlert
+        onClicks={handleLogout}
+        onClose={() => setDialogAlert(false)}
+        open={dialogAlert}
+        variation="doubleButton"
+        buttonText="Keluar"
+        title="Keluar"
+        message="Anda yakin ingin keluar ?"
+      />
     </AppBar>
   );
 };

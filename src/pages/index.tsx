@@ -19,13 +19,18 @@ import im4 from "../../public/images/im4.png";
 import kemenparekraf from "../../public/images/kemenparekraf.png";
 import { Buttons } from "../components/Button/Button";
 import { LandingAppBar } from "../components/AppBar/LandingAppBar";
+import { useUser } from "../swr-cache/useUser";
 
 const Landing = () => {
   const images = [im1, im2, im3, im4];
   const [currentImage, setCurrentImage] = useState(0);
   const router = useRouter();
+  const { user } = useUser();
 
   useEffect(() => {
+    if (user) {
+      router.replace("/home");
+    }
     const interval = setInterval(() => {
       if (currentImage === images.length - 1) {
         setCurrentImage(0);
@@ -34,7 +39,11 @@ const Landing = () => {
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [currentImage]);
+  }, [currentImage, router, user]);
+
+  if (user) {
+    return <></>;
+  }
 
   return (
     <Stack>

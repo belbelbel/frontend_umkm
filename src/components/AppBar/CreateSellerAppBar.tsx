@@ -19,7 +19,11 @@ import logo from "../../../public/images/logo.png";
 import { useRouter } from "next/router";
 import { Buttons } from "../Button/Button";
 
-export const CreateSellerAppBar: React.FC = () => {
+interface Props {
+  link: string;
+}
+
+export const CreateSellerAppBar: React.FC<Props> = ({ link }) => {
   const router = useRouter();
 
   return (
@@ -45,7 +49,7 @@ export const CreateSellerAppBar: React.FC = () => {
           </Link>
           <Stack direction="row" spacing={2}>
             <Buttons
-              onClick={() => router.push("/seller/dashboard")}
+              onClick={() => router.push(link)}
               variation="contained"
               startIcon={<i className="bx bx-left-arrow-alt" />}
               sx={{

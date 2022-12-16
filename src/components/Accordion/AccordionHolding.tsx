@@ -118,6 +118,9 @@ export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
               </Stack>
               <Stack direction="row" spacing={2} marginTop={3}>
                 <Button
+                  onClick={() =>
+                    router.push(`/seller/holding/${id}/umkm/${i.id}`)
+                  }
                   startIcon={
                     <i className="bx bxs-detail" style={{ fontSize: "13px" }} />
                   }

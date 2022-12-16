@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Stack,
   Container,
@@ -16,14 +16,22 @@ import { AuthAppBar } from "../components/AppBar/AuthAppBar";
 import { useRouter } from "next/router";
 import { Buttons } from "../components/Button/Button";
 import { DialogAlert } from "../components/Dialog/DialogAlert";
+import { useUser } from "../swr-cache/useUser";
 
 const Registration = () => {
   const router = useRouter();
+  const { user } = useUser();
   const [alertOpen, setAlertOpen] = useState(false);
 
-  // const handleAlertOpen = () => {
-  //   setAlertOpen(true);
-  // };
+  // useEffect(() => {
+  //   if (user) {
+  //     router.replace("/home");
+  //   }
+  // }, [router, user]);
+
+  // if (user) {
+  //   return <></>;
+  // }
 
   return (
     <Box>

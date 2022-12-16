@@ -16,6 +16,7 @@ interface DialogProps {
   onClicks?: () => void;
   variation?: "doubleButton";
   buttonText?: string;
+  code?: string;
 }
 
 export const DialogAlert: React.FC<DialogProps> = ({
@@ -26,6 +27,7 @@ export const DialogAlert: React.FC<DialogProps> = ({
   onClicks,
   variation,
   buttonText,
+  code,
 }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
@@ -36,6 +38,7 @@ export const DialogAlert: React.FC<DialogProps> = ({
       </DialogTitle>
       <DialogContent>
         <Typography variant="subtitle1">{message}</Typography>
+        <Typography variant="h6">{code}</Typography>
       </DialogContent>
       <DialogActions>
         {variation === "doubleButton" && (

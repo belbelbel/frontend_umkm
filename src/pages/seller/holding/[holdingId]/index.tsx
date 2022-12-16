@@ -9,22 +9,34 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreateSellerAppBar } from "../../../../components/AppBar/CreateSellerAppBar";
 import { Buttons } from "../../../../components/Button/Button";
 import { useHoldingId } from "../../../../swr-cache/useHoldingId";
 import { useUmkmByHoldingId } from "../../../../swr-cache/useUmkmByHoldingId";
+import { useUser } from "../../../../swr-cache/useUser";
 import { BaseParams } from "../../../../types/query";
 
 const HoldingDetail = () => {
   const router = useRouter();
+  const { user } = useUser();
   const { holdingId } = router.query as BaseParams;
   const { umkmByHolding } = useUmkmByHoldingId(parseInt(holdingId));
   const { holdingDetail } = useHoldingId(parseInt(holdingId));
   const [isEditting, setIsEditting] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [router, user]);
+
+  if (!user) {
+    return <></>;
+  }
   return (
     <>
-      <CreateSellerAppBar />
+      <CreateSellerAppBar link="/seller/dashboard" />
       <Container maxWidth="lg" sx={{ marginTop: 12 }}>
         <Typography variant="h4" fontWeight={600}>
           Detail UMKM

@@ -1,11 +1,17 @@
 //USER
 
 export interface User {
+  id: number;
   email: string;
   password?: string;
   nama: string;
   alamat: string;
   no_telp: string;
+}
+
+export interface FetchUser {
+  message: string;
+  data: User;
 }
 
 //Umkm
@@ -78,16 +84,60 @@ export interface ListHoldings {
 export interface ListProduct {
   code: number;
   message: string;
+  data: Product[];
+}
+
+export interface ProductDetail {
+  code: number;
+  message: string;
   data: Product;
 }
+
+export interface Foto {
+  id: number;
+  created_at: Date;
+  path_foto: string;
+  produk_id: number;
+  updated_at: Date;
+}
+
 export interface Product {
   id: number;
   umkm_id: number;
   nama: string;
-  harga: string;
-  diskon: string;
+  harga: number;
+  diskon: number;
   deleted_at: Date;
   created_at: Date;
   updated_at: Date;
   umkm: Umkm;
+  foto: Foto[];
+}
+
+export interface ResponsePhotos {
+  message: string;
+  data: number;
+}
+
+//Product Public
+
+export interface Pagination {
+  current_page: number;
+  per_page: number;
+  total: number;
+  data: Product[];
+}
+
+export interface ResponsePublicProduct {
+  message: string;
+  data: Pagination;
+}
+
+export interface MakeOrder {
+  orders: [
+    {
+      produk_id: number;
+      jumlah: number;
+    }
+  ];
 }

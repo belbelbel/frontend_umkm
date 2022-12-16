@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { GetStaticProps } from "next";
 import { MainAppBar } from "../components/AppBar/MainAppBar";
 import { ProductCard } from "../components/Card/ProductCard";
@@ -7,21 +7,29 @@ import banner2 from "../../public/images/banner2.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useUser } from "../swr-cache/useUser";
+import { useProductPublicList } from "../swr-cache/role-public/useProductPublicList";
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  return {
-    props: {
-      protected: true,
-    },
-  };
-};
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   return {
+//     props: {
+//       protected: true,
+//     },
+//   };
+// };
 
 export const Home = () => {
   const images = [banner1, banner2];
   const [currentImage, setCurrentImage] = useState(0);
   const router = useRouter();
+  const { user, loggedOut } = useUser();
+  const { publicProduct } = useProductPublicList();
 
   useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+
     const interval = setInterval(() => {
       if (currentImage === images.length - 1) {
         setCurrentImage(0);
@@ -31,6 +39,11 @@ export const Home = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [currentImage]);
+
+  if (!user) {
+    <></>;
+  }
+
   return (
     <>
       <MainAppBar />
@@ -106,12 +119,18 @@ export const Home = () => {
         >
           Produk Menarik
         </Typography>
-        <Stack direction="row" justifyContent="space-between">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </Stack>
+        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          {publicProduct?.map((i) => (
+            <Grid item key={i.id}>
+              <ProductCard
+                id={i.id}
+                nama={i.nama}
+                harga={i.harga}
+                diskon={i.diskon}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </>
   );

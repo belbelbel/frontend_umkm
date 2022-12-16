@@ -25,16 +25,28 @@ import { DialogAddUmkmToHolding } from "../../components/Dialog/DialogAddUmkmToH
 import { fetchUmkm } from "../../repositories/repo";
 import { useHoldingList } from "../../swr-cache/useHoldingList";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
+import { useUser } from "../../swr-cache/useUser";
 import { Umkm } from "../../types/models";
 
 const DashboardSeller = () => {
   const router = useRouter();
+  const { user } = useUser();
 
   const [tab, setTab] = useState(1);
 
   const handleTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [router, user]);
+
+  if (!user) {
+    return <></>;
+  }
 
   return (
     <>

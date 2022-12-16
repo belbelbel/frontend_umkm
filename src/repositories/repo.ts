@@ -1,5 +1,7 @@
 import { apiEcom } from "../pages/api/hello";
 import {
+  FetchUser,
+  Foto,
   Holding,
   ListHolding,
   ListHoldings,
@@ -7,6 +9,10 @@ import {
   ListUmkm,
   ListUmkms,
   PivotHolding,
+  Product,
+  ProductDetail,
+  ResponsePhotos,
+  ResponsePublicProduct,
   Umkm,
   User,
 } from "../types/models";
@@ -47,6 +53,20 @@ export const registration = async (data: Partial<User>): Promise<User> => {
 export const logout = async () => {
   try {
     await apiEcom.post("/auth/logout");
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchUser = async () => {
+  try {
+    const res = await apiEcom.get<FetchUser>("/user/me");
+    // console.log(res.data.data);
+    // console.log(res);
+    return res.data.data;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {
       throw error.response;
@@ -185,11 +205,85 @@ export const removeUmkmFromHolding = async (
   }
 };
 
-//PRODUK PUBLIC
+//PRODUCT OWNER
+export const fetchProductOwner = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ListProduct>(`/umkm/${id}/produk`);
+    console.log(res);
+    return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchPhotoProductOwner = async (id: number) => {
+  try {
+    const res = await apiEcom.get<Product>(`/umkm/${id}/produk`);
+    console.log(res);
+    return res.data.foto;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const uploadPhoto = async (umkmId: number, data: File) => {
+  try {
+    const body = new FormData();
+    body.append("foto", data);
+    const res = await apiEcom.post(`/umkm/${umkmId}/foto/produk`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const response = res.data;
+    return response;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const createProduct = async (umkmId: number, data: Partial<Product>) => {
+  try {
+    const res = await apiEcom.post<Product>(`/umkm/${umkmId}/produk`, data);
+    console.log(res.data);
+    return res.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+//PRODUCT PUBLIC
 
 export const fetchProductPublic = async () => {
   try {
-    const res = await apiEcom.get<ListProduct>("/public/produk");
+    const res = await apiEcom.get<ResponsePublicProduct>(
+      `/public/produk?perpage=10&orderby=id&order=desc`
+    );
+    return res.data.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchProductDetailPublic = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ProductDetail>(`/public/produk/${id}`);
+    // console.log(res);
     return res.data.data;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {

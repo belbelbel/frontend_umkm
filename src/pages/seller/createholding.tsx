@@ -11,15 +11,17 @@ import {
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreateSellerAppBar } from "../../components/AppBar/CreateSellerAppBar";
 import { Buttons } from "../../components/Button/Button";
 import { LoadingButtons } from "../../components/Button/LoadingButton";
 import { createHolding, createUmkm } from "../../repositories/repo";
 import { useUmkmList } from "../../swr-cache/useUmkmList";
+import { useUser } from "../../swr-cache/useUser";
 
 export const CreateHolding = () => {
   const router = useRouter();
+  const { user } = useUser();
   const { umkm } = useUmkmList();
   const [parentUmkm, setParentUmkm] = useState(false);
 
@@ -27,9 +29,19 @@ export const CreateHolding = () => {
     setParentUmkm(event.target.checked);
   };
 
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [router, user]);
+
+  if (!user) {
+    return <></>;
+  }
+
   return (
     <>
-      <CreateSellerAppBar />
+      <CreateSellerAppBar link="/seller/dashboard" />
       <Container maxWidth="lg" sx={{ marginTop: 12 }}>
         <Typography variant="h4" fontWeight={600}>
           Buat UMKM
