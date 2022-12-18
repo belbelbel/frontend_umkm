@@ -71,7 +71,7 @@ export const ReviewPage = () => {
               console.log(data);
               setSubmitting(true);
               try {
-                await reviewOrder(parseInt(orderId), { review: data });
+                await reviewOrder(parseInt(orderId), data);
                 router.push("/buyer/order");
               } catch (error: any) {
                 console.log(error);

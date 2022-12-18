@@ -30,7 +30,7 @@ export const DialogDetailOrder: React.FC<DialogProps> = ({
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle marginBottom={1} sx={{ py: 3, px: 3 }}>
         <Typography variant="body1" fontWeight={600}>
-          Detail UMKM
+          Detail Order
         </Typography>
       </DialogTitle>
       <DialogContent sx={{ py: 3, px: 3 }}>
@@ -38,9 +38,6 @@ export const DialogDetailOrder: React.FC<DialogProps> = ({
           <Stack direction="column" spacing={4}>
             <Stack direction="row" spacing={30}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="caption" color="GrayText">
-                  Nama Umkm
-                </Typography>
                 {orderDetail?.details.map((i) => (
                   <Stack key={i.id} direction="row" spacing={4}>
                     <Typography variant="body1">{i.produk.nama}</Typography>

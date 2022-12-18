@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MainAppBar } from "../../../components/AppBar/MainAppBar";
 import { Buttons } from "../../../components/Button/Button";
 import { BuyHistoryCard } from "../../../components/Card/Buyer/BuyHistoryCard";
@@ -10,10 +10,12 @@ import { DialogDoneOrder } from "../../../components/Dialog/DialogDoneOrder";
 import { useBuyerListOrder } from "../../../swr-cache/role-buyer/useBuyerListOrder";
 import { useBuyerOrderDetail } from "../../../swr-cache/role-buyer/useBuyerOrderDetail";
 import { useProductPublicList } from "../../../swr-cache/role-public/useProductPublicList";
+import { useUser } from "../../../swr-cache/useUser";
 import { BaseParams } from "../../../types/query";
 
 const Order = () => {
   const router = useRouter();
+  const { user } = useUser();
   const { order, mutate } = useBuyerListOrder();
   const { publicProduct } = useProductPublicList();
   const { orderId } = router.query as BaseParams;
@@ -31,6 +33,16 @@ const Order = () => {
     setIdOrder(id);
     setDialogDone(true);
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [router, user]);
+
+  if (!user) {
+    return <></>;
+  }
 
   return (
     <>
@@ -62,7 +74,7 @@ const Order = () => {
                     <Box
                       sx={{
                         backgroundColor:
-                          (i.status === "paid" && "rgba(68, 165, 25, 0.8)") ||
+                          (i.status === "paid" && "rgba(172, 255, 162, 0.8)") ||
                           (i.status === "sent" && "rgba(255, 190, 158, 0.8)") ||
                           (i.status === "done" && "rgba(154, 193, 255, 0.8)"),
                         px: 2,
@@ -118,7 +130,7 @@ const Order = () => {
                         Pesanan diterima
                       </Buttons>
                     )}
-                    {i.status === "done" && (
+                    {i.status === "done" && i.review === "" && (
                       <Buttons
                         variation="outlined"
                         sx={{ py: 0.5, px: 4 }}

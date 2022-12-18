@@ -369,7 +369,7 @@ export const doneOrder = async (id: number) => {
   }
 };
 
-export const reviewOrder = async (id: number, data: Object) => {
+export const reviewOrder = async (id: number, data: string) => {
   try {
     const res = await apiEcom.post(`/pembelian/${id}/review`, data);
     console.log(res.data);

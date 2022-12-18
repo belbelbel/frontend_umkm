@@ -203,7 +203,7 @@ export const PembelianDetail = () => {
               console.log(data);
               setSubmitting(true);
               try {
-                await updateResi(parseInt(pembelianId), { no_resi: data });
+                await updateResi(parseInt(pembelianId), data);
                 router.push("/seller/dashboard");
               } catch (error: any) {
                 console.log(error);
@@ -228,6 +228,8 @@ export const PembelianDetail = () => {
                     id="no_resi"
                     onChange={handleChange}
                     value={values.no_resi}
+                    // onChange={(e) => setResi(e.target.value)}
+                    // value={resi}
                   />
                 </Stack>
                 <Box display="flex" justifyContent="right">

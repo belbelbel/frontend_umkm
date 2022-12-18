@@ -7,6 +7,7 @@ export interface User {
   nama: string;
   alamat: string;
   no_telp: string;
+  balance: number;
 }
 
 export interface FetchUser {

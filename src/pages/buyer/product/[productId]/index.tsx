@@ -17,10 +17,12 @@ import { MainAppBar } from "../../../../components/AppBar/MainAppBar";
 import { Buttons } from "../../../../components/Button/Button";
 import { useProductDetailPublic } from "../../../../swr-cache/role-public/useProductDetailPublic";
 import { useProductReview } from "../../../../swr-cache/role-public/useProductReview";
+import { useUser } from "../../../../swr-cache/useUser";
 import { BaseParams } from "../../../../types/query";
 
 const ProductPublicDetail = () => {
   const router = useRouter();
+  const { user } = useUser();
   const { productId } = router.query as BaseParams;
   const { productDetailPublic } = useProductDetailPublic(parseInt(productId));
   const [count, setCount] = useState(1);
@@ -73,6 +75,16 @@ const ProductPublicDetail = () => {
       setCount(count - 1);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [router, user]);
+
+  if (!user) {
+    return <></>;
+  }
 
   // console.log(JSON.parse(localStorage.getItem("orders")));
 

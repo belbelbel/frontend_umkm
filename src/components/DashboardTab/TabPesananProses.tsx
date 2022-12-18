@@ -78,13 +78,16 @@ export const TabPesananProses: React.FC<Props> = ({ value, index, id }) => {
                             </Typography>
                           </Box>
                           <Buttons
+                            disabled={i.status === "unpaid"}
                             variation="contained"
                             sx={{ px: 3, py: 0.5 }}
                             onClick={() =>
                               router.push(`/seller/pembelian/${i.id}`)
                             }
                           >
-                            Periksa pembelian
+                            {i.status === "unpaid"
+                              ? "Tidak dapat diproses"
+                              : "Periksa pembelian"}
                           </Buttons>
                         </Stack>
                       </Stack>
