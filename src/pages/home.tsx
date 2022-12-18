@@ -4,19 +4,16 @@ import { MainAppBar } from "../components/AppBar/MainAppBar";
 import { ProductCard } from "../components/Card/ProductCard";
 import banner1 from "../../public/images/banner1.png";
 import banner2 from "../../public/images/banner2.png";
+import diskon from "../../public/images/diskon.png";
+import kt1 from "../../public/images/kt1.png";
+import kt2 from "../../public/images/kt2.png";
+import kt3 from "../../public/images/kt3.png";
+import kt4 from "../../public/images/kt4.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "../swr-cache/useUser";
 import { useProductPublicList } from "../swr-cache/role-public/useProductPublicList";
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   return {
-//     props: {
-//       protected: true,
-//     },
-//   };
-// };
 
 export const Home = () => {
   const images = [banner1, banner2];
@@ -71,30 +68,154 @@ export const Home = () => {
               Kategori
             </Typography>
             <Stack direction="row" spacing={3}>
-              <Box
-                width={120}
-                height={120}
-                border="1px solid rgba(172, 172, 172, 0.8)"
-                borderRadius={3}
-              />
-              <Box
-                width={120}
-                height={120}
-                border="1px solid rgba(172, 172, 172, 0.8)"
-                borderRadius={3}
-              />
-              <Box
-                width={120}
-                height={120}
-                border="1px solid rgba(172, 172, 172, 0.8)"
-                borderRadius={3}
-              />
-              <Box
-                width={120}
-                height={120}
-                border="1px solid rgba(172, 172, 172, 0.8)"
-                borderRadius={3}
-              />
+              <Stack
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <Typography
+                  fontWeight={600}
+                  sx={{
+                    color: "transparent",
+                    position: "absolute",
+                    borderRadius: 2,
+                    width: 122,
+                    height: 26,
+                    textAlign: "center",
+                    py: 6,
+                    "&:hover": {
+                      background: "rgba(12, 12, 12, 0.3)",
+                      color: "#FFFFFF",
+                    },
+                  }}
+                >
+                  Kuliner
+                </Typography>
+
+                <Image
+                  src={kt1}
+                  alt="k"
+                  style={{
+                    border: "1px solid rgba(172, 172, 172, 0.8)",
+                    borderRadius: 10,
+                    width: 120,
+                    height: 120,
+                  }}
+                />
+              </Stack>
+              <Stack
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <Typography
+                  fontWeight={600}
+                  sx={{
+                    color: "transparent",
+                    position: "absolute",
+                    borderRadius: 2,
+                    width: 122,
+                    height: 26,
+                    textAlign: "center",
+                    py: 6,
+                    "&:hover": {
+                      background: "rgba(12, 12, 12, 0.3)",
+                      color: "#FFFFFF",
+                    },
+                  }}
+                >
+                  Fashion
+                </Typography>
+
+                <Image
+                  src={kt2}
+                  alt="k"
+                  style={{
+                    border: "1px solid rgba(172, 172, 172, 0.8)",
+                    borderRadius: 10,
+                    width: 120,
+                    height: 120,
+                  }}
+                />
+              </Stack>
+              <Stack
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <Typography
+                  fontWeight={600}
+                  sx={{
+                    color: "transparent",
+                    position: "absolute",
+                    borderRadius: 2,
+                    width: 122,
+                    height: 26,
+                    textAlign: "center",
+                    py: 6,
+                    "&:hover": {
+                      background: "rgba(12, 12, 12, 0.3)",
+                      color: "#FFFFFF",
+                    },
+                  }}
+                >
+                  Furniture
+                </Typography>
+
+                <Image
+                  src={kt3}
+                  alt="k"
+                  style={{
+                    border: "1px solid rgba(172, 172, 172, 0.8)",
+                    borderRadius: 10,
+                    width: 120,
+                    height: 120,
+                  }}
+                />
+              </Stack>
+              <Stack
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <Typography
+                  fontWeight={600}
+                  sx={{
+                    color: "transparent",
+                    position: "absolute",
+                    borderRadius: 2,
+                    width: 122,
+                    height: 26,
+                    textAlign: "center",
+                    py: 6,
+                    "&:hover": {
+                      background: "rgba(12, 12, 12, 0.3)",
+                      color: "#FFFFFF",
+                    },
+                  }}
+                >
+                  Seni
+                </Typography>
+
+                <Image
+                  src={kt4}
+                  alt="k"
+                  style={{
+                    border: "1px solid rgba(172, 172, 172, 0.8)",
+                    borderRadius: 10,
+                    width: 120,
+                    height: 120,
+                  }}
+                />
+              </Stack>
             </Stack>
           </Stack>
           <Stack direction="column" spacing={2}>
@@ -102,11 +223,15 @@ export const Home = () => {
               Diskon Bulan Ini
             </Typography>
 
-            <Box
-              width={600}
-              height={120}
-              border="1px solid rgba(172, 172, 172, 0.8)"
-              borderRadius={3}
+            <Image
+              src={diskon}
+              alt="diskon"
+              style={{
+                border: "1px solid rgba(172, 172, 172, 0.8)",
+                borderRadius: 10,
+                width: 600,
+                height: 120,
+              }}
             />
           </Stack>
         </Stack>

@@ -57,17 +57,33 @@ const CartPage = () => {
   const [orders, setOrders] = useState([]);
   const [responseData, setResponseData] = useState<BuyType>();
   const [dialogCode, setDialogCode] = useState(false);
+  const setEmpty = {};
+  // let data: Array<number> = [];
+  // const [sumTotals, setSumTotals] = useState<number>();
+  // let newArray: Array<{ produk_id: number; jumlah: number }> = [];
 
   useEffect(() => {
-    const cartData = JSON.parse(localStorage.getItem("orders") || "{}");
+    const cartData = JSON.parse(localStorage.getItem("orders"));
     if (cartData) {
       setOrders(cartData);
     }
-    console.log(cartData);
+    console.log(orders);
   }, []);
 
+  // const calculate = () => {
+  //   if (orders.length !== 0) {
+  //     data = orders?.map((i) => i.harga * ((100 - i.diskon) / 100) * i.jumlah);
+  //     console.log(data);
+  //     setSumTotals(data?.reduce((a, b) => a + b, 0));
+  //     newArray = orders?.map(({ produk_id, jumlah }) => ({
+  //       produk_id,
+  //       jumlah,
+  //     }));
+  //   }
+  // };
+
   let data = orders?.map((i) => i.harga * ((100 - i.diskon) / 100) * i.jumlah);
-  let sumTotals = data?.reduce((a, b) => a + b, 0);
+  let sumTotal = data?.reduce((a, b) => a + b, 0);
 
   let newArray = orders?.map(({ produk_id, jumlah }) => ({
     produk_id,
@@ -84,6 +100,8 @@ const CartPage = () => {
         JSON.stringify(dataCheckout)
       );
       setResponseData(res.data);
+      localStorage.removeItem("orders");
+      localStorage.setItem("orders", JSON.stringify(setEmpty));
       setDialogCode(true);
     } catch (error: any | AxiosError) {
       if (axios.isAxiosError(error)) {
@@ -118,83 +136,92 @@ const CartPage = () => {
             <Typography variant="h5" fontWeight={600} marginBottom={5}>
               Keranjang
             </Typography>
-            <Stack direction="column" spacing={3}>
-              <Stack direction="row" justifyContent="space-between">
-                <Stack direction="row">
-                  <Box width={50}>
-                    <Typography variant="caption" color="GrayText">
-                      No
-                    </Typography>
-                  </Box>
-                  <Box width={250}>
-                    <Typography variant="caption" color="GrayText">
-                      Produk
-                    </Typography>
-                  </Box>
-                  <Box width={135}>
-                    <Typography variant="caption" color="GrayText">
-                      Harga Satuan
-                    </Typography>
-                  </Box>
-                  <Box width={90}>
-                    <Typography variant="caption" color="GrayText">
-                      Kuantitas
-                    </Typography>
-                  </Box>
-                  <Box width={150}>
-                    <Typography variant="caption" color="GrayText">
-                      Total
-                    </Typography>
-                  </Box>
-                  <Box width={100}>
-                    <Typography variant="caption" color="GrayText">
-                      {" "}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </Stack>
-              {orders.length === 0 && (
-                <Typography>
-                  Pilih produk untuk dimasukkan ke dalam keranjang
-                </Typography>
-              )}
-              {orders?.map((i, index) => {
-                let diskon = i.harga * ((100 - i.diskon) / 100);
-                let afterDiskon = diskon * i.jumlah;
-                return (
-                  <Stack direction="column" key={index}>
-                    <Stack direction="row">
-                      <Box width={50}>
-                        <Typography>{index + 1}</Typography>
-                      </Box>
-                      <Box width={250}>
-                        <Typography>{i.nama_produk}</Typography>
-                      </Box>
-                      <Box width={150}>
-                        <Typography>{i.harga}</Typography>
-                      </Box>
-                      <Box width={80}>
-                        <Typography>{i.jumlah}</Typography>
-                      </Box>
-                      <Box width={150}>
-                        <Typography>
-                          {i.diskon !== 0 ? afterDiskon : i.harga * i.jumlah}
-                        </Typography>
-                      </Box>
-                      <Box width={100}>
-                        {i.diskon !== 0 ? (
-                          <Typography variant="subtitle2" color="#5C4EBD">
-                            {"(" + "Diskon" + " " + i.diskon + " " + "%" + ")"}
-                          </Typography>
-                        ) : (
-                          ""
-                        )}
-                      </Box>
-                    </Stack>
+            {orders === {} ? (
+              <Typography textAlign="center" variant="body1">
+                Keranjang kosong
+              </Typography>
+            ) : (
+              <Stack direction="column" spacing={3}>
+                <Stack direction="row" justifyContent="space-between">
+                  <Stack direction="row">
+                    <Box width={50}>
+                      <Typography variant="caption" color="GrayText">
+                        No
+                      </Typography>
+                    </Box>
+                    <Box width={250}>
+                      <Typography variant="caption" color="GrayText">
+                        Produk
+                      </Typography>
+                    </Box>
+                    <Box width={135}>
+                      <Typography variant="caption" color="GrayText">
+                        Harga Satuan
+                      </Typography>
+                    </Box>
+                    <Box width={90}>
+                      <Typography variant="caption" color="GrayText">
+                        Kuantitas
+                      </Typography>
+                    </Box>
+                    <Box width={150}>
+                      <Typography variant="caption" color="GrayText">
+                        Total
+                      </Typography>
+                    </Box>
+                    <Box width={100}>
+                      <Typography variant="caption" color="GrayText">
+                        {" "}
+                      </Typography>
+                    </Box>
                   </Stack>
-                );
-              })}
-            </Stack>
+                </Stack>
+
+                {orders?.map((i, index) => {
+                  let diskon = i.harga * ((100 - i.diskon) / 100);
+                  let afterDiskon = diskon * i.jumlah;
+                  return (
+                    <Stack direction="column" key={index}>
+                      <Stack direction="row">
+                        <Box width={50}>
+                          <Typography>{index + 1}</Typography>
+                        </Box>
+                        <Box width={250}>
+                          <Typography>{i.nama_produk}</Typography>
+                        </Box>
+                        <Box width={150}>
+                          <Typography>{i.harga}</Typography>
+                        </Box>
+                        <Box width={80}>
+                          <Typography>{i.jumlah}</Typography>
+                        </Box>
+                        <Box width={150}>
+                          <Typography>
+                            {i.diskon !== 0 ? afterDiskon : i.harga * i.jumlah}
+                          </Typography>
+                        </Box>
+                        <Box width={100}>
+                          {i.diskon !== 0 ? (
+                            <Typography variant="subtitle2" color="#5C4EBD">
+                              {"(" +
+                                "Diskon" +
+                                " " +
+                                i.diskon +
+                                " " +
+                                "%" +
+                                ")"}
+                            </Typography>
+                          ) : (
+                            ""
+                          )}
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            )}
+
             <Stack
               direction="row"
               spacing={2}
@@ -206,7 +233,7 @@ const CartPage = () => {
                 Total
               </Typography>
               <Typography variant="h5" fontWeight={600} marginBottom={5}>
-                {"Rp" + " " + sumTotals}
+                {"Rp" + " " + sumTotal}
               </Typography>
             </Stack>
             <Stack
@@ -218,7 +245,7 @@ const CartPage = () => {
               <Buttons
                 variation="outlined"
                 onClick={() => {
-                  localStorage.clear();
+                  localStorage.removeItem("orders");
                   console.log(localStorage.getItem("cart"));
                 }}
                 sx={{ px: 6 }}

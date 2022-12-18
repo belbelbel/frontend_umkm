@@ -77,7 +77,7 @@ export const MainAppBar: React.FC = () => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Status pembelian">
-              <IconButton>
+              <IconButton onClick={() => router.push("/buyer/order")}>
                 <i className="bx bx-package" style={{ fontSize: "25px" }} />
               </IconButton>
             </Tooltip>

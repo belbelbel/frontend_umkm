@@ -4,5 +4,5 @@ export interface BaseParams extends ParsedUrlQuery {
   umkmId: string;
   holdingId: string;
   productId: string;
-  successPayment: string;
+  pembelianId: string;
 }

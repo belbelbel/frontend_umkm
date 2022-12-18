@@ -1,10 +1,14 @@
 import { apiEcom } from "../pages/api/hello";
 import {
+  DetailOrderSeller,
   FetchUser,
   Foto,
   Holding,
   ListHolding,
   ListHoldings,
+  ListOrder,
+  ListOrderDetail,
+  ListOrderDetailSeller,
   ListProduct,
   ListUmkm,
   ListUmkms,
@@ -13,6 +17,7 @@ import {
   ProductDetail,
   ResponsePhotos,
   ResponsePublicProduct,
+  ReviewProduct,
   Umkm,
   User,
 } from "../types/models";
@@ -285,6 +290,134 @@ export const fetchProductDetailPublic = async (id: number) => {
     const res = await apiEcom.get<ProductDetail>(`/public/produk/${id}`);
     // console.log(res);
     return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchReviewProduct = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ReviewProduct>(
+      `/public/produk/${id}/reviews`
+    );
+    console.log(res.data);
+    return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+//PEMBELIAN BUYER
+
+export const BuyerListOrder = async () => {
+  try {
+    const res = await apiEcom.get<ListOrder>(
+      `/pembelian?perpage=30&orderby=id&order=desc`
+    );
+    console.log(res.data.data.data);
+    return res.data.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const BuyerOrderDetail = async (id: number) => {
+  try {
+    const res = await apiEcom.get<ListOrderDetail>(`/pembelian/${id}`);
+    // console.log(res.data);
+    return res.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const receiveOrder = async (id: number) => {
+  try {
+    const res = await apiEcom.post(`/public/pembelian/${id}/received`);
+    console.log(res.data);
+    return res.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const doneOrder = async (id: number) => {
+  try {
+    const res = await apiEcom.post(`/pembelian/${id}/done`);
+    console.log(res.data);
+    return res.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const reviewOrder = async (id: number, data: Object) => {
+  try {
+    const res = await apiEcom.post(`/pembelian/${id}/review`, data);
+    console.log(res.data);
+    return res.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+//PEMBELIAN SELLER
+export const fetchOrderList = async () => {
+  try {
+    const res = await apiEcom.get<ListOrderDetailSeller>(
+      `/umkm/all/pembelian?perpage=30&orderby=id&order=desc`
+    );
+    console.log(res.data.data.data);
+    return res.data.data.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const fetchOrderListDetail = async (id: number) => {
+  try {
+    const res = await apiEcom.get<DetailOrderSeller>(
+      `/umkm/all/pembelian/${id}`
+    );
+    // console.log(res.data);
+    return res.data;
+  } catch (error: any | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      throw error.response;
+    }
+    throw error;
+  }
+};
+
+export const updateResi = async (id: number, data: Object) => {
+  try {
+    const res = await apiEcom.post(`/umkm/all/pembelian/${id}/resi`, data);
+    console.log(res.data);
+    return res.data;
   } catch (error: any | AxiosError) {
     if (axios.isAxiosError(error)) {
       throw error.response;
