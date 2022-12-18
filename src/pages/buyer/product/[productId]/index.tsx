@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { number } from "yup/lib/locale";
@@ -17,6 +18,8 @@ import { MainAppBar } from "../../../../components/AppBar/MainAppBar";
 import { Buttons } from "../../../../components/Button/Button";
 import { useProductDetailPublic } from "../../../../swr-cache/role-public/useProductDetailPublic";
 import { useProductReview } from "../../../../swr-cache/role-public/useProductReview";
+import { useHoldingId } from "../../../../swr-cache/useHoldingId";
+import { useHoldingList } from "../../../../swr-cache/useHoldingList";
 import { useUser } from "../../../../swr-cache/useUser";
 import { BaseParams } from "../../../../types/query";
 
@@ -30,6 +33,7 @@ const ProductPublicDetail = () => {
   const [orders, setOrders] = useState(arrayOfOrders);
   const dataOrders = {};
   const { reviews } = useProductReview(parseInt(productId));
+  const { holding } = useHoldingList();
 
   useEffect(() => {
     const cartData = JSON.parse(localStorage.getItem("orders") || "{}");
@@ -94,10 +98,19 @@ const ProductPublicDetail = () => {
       <Container maxWidth="lg" sx={{ marginTop: 12 }}>
         {/* <Card sx={{ p: 3 }}> */}
         <Stack direction="row" spacing={4}>
-          <Box
+          {/* <Box
             width={350}
             height={250}
             sx={{ backgroundColor: "#EFEFEF", borderRadius: 3 }}
+          /> */}
+          <Image
+            src={
+              productDetailPublic?.foto.map((i) => i.path_foto) + "?width=350"
+            }
+            alt="gambar produk"
+            width={350}
+            height={250}
+            style={{ borderRadius: 20 }}
           />
           <Stack direction="column">
             <Stack direction="column">
@@ -209,8 +222,9 @@ const ProductPublicDetail = () => {
               </Box>
               <Stack direction="column" spacing={1}>
                 <Typography variant="h6" fontWeight={600}>
-                  Nama Toko
+                  {productDetailPublic?.umkm.nama_umkm}
                 </Typography>
+
                 <Stack direction="row" alignItems="center" spacing={1}>
                   <Box
                     sx={{
@@ -220,9 +234,8 @@ const ProductPublicDetail = () => {
                       borderRadius: 100,
                     }}
                   />
-
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Pengiriman dari Solo
+                    Pengiriman dari {productDetailPublic?.umkm.alamat}
                   </Typography>
                 </Stack>
               </Stack>

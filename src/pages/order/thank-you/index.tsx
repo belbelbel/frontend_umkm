@@ -36,7 +36,7 @@ const SuccessPayment = () => {
         Terima kasih telah melakukan transaksi. Mohon tunggu Penjual mengirimkan
         produk Anda.
       </Typography>
-      <Buttons variation="outlined" onClick={() => router.push("/home")}>
+      <Buttons variation="outlined" onClick={() => router.push("/buyer/order")}>
         Lihat pesanan saya
       </Buttons>
     </Container>

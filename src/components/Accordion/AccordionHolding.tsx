@@ -28,7 +28,7 @@ interface Props {
 
 export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
   const router = useRouter();
-  const { umkmByHolding } = useUmkmByHoldingId(id);
+  const { umkmByHolding, mutate } = useUmkmByHoldingId(id);
   const [selectedId, setSelectedId] = useState<number>();
   const [selectedName, setSelectedName] = useState<string>("");
   // const [detailUmkm, setDetailUmkm] = useState(false);
@@ -52,6 +52,7 @@ export const AccordionHolding: React.FC<Props> = ({ id, nama_umkm }) => {
     try {
       await removeUmkmFromHolding(id, selectedId);
       setDialogDelete(false);
+      mutate();
       router.push("/seller/dashboard");
     } catch (error: any) {
       throw error;

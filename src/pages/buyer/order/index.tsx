@@ -21,11 +21,13 @@ const Order = () => {
   const { orderId } = router.query as BaseParams;
   const { orderDetail } = useBuyerOrderDetail(parseInt(orderId));
   const [idOrder, setIdOrder] = useState<number>();
+  const [statusOrder, setStatusOrder] = useState<string>();
   const [dialogDetail, setDialogDetail] = useState(false);
   const [dialogDone, setDialogDone] = useState(false);
 
-  const openDialog = (id: number) => {
+  const openDialog = (id: number, data: string) => {
     setIdOrder(id);
+    setStatusOrder(data);
     setDialogDetail(true);
   };
 
@@ -130,7 +132,7 @@ const Order = () => {
                         Pesanan diterima
                       </Buttons>
                     )}
-                    {i.status === "done" && i.review === "" && (
+                    {i.status === "done" && i.review === null && (
                       <Buttons
                         variation="outlined"
                         sx={{ py: 0.5, px: 4 }}
@@ -144,7 +146,7 @@ const Order = () => {
                     <Buttons
                       variation="contained"
                       sx={{ py: 0.5, px: 4 }}
-                      onClick={() => openDialog(i.id)}
+                      onClick={() => openDialog(i.id, i.status)}
                     >
                       Lihat Detail
                     </Buttons>
@@ -157,6 +159,7 @@ const Order = () => {
         <DialogDetailOrder
           open={dialogDetail}
           id={idOrder}
+          status={statusOrder}
           onClose={() => setDialogDetail(false)}
         />
         <DialogDoneOrder

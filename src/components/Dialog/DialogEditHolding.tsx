@@ -25,6 +25,7 @@ export const DialogEditHolding: React.FC<DialogProps> = ({
   onClose,
 }) => {
   const { umkmById } = useUmkmById(id);
+  const [names, setNames] = useState<string>();
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle marginBottom={1} sx={{ py: 3, px: 3 }}>
@@ -35,7 +36,12 @@ export const DialogEditHolding: React.FC<DialogProps> = ({
       <DialogContent sx={{ py: 3, px: 3 }}>
         <>
           <Stack direction="column" spacing={4} marginTop={2}>
-            <TextField value={name} label="Nama" />
+            <TextField
+              defaultValue={name}
+              value={names}
+              label="Nama"
+              onChange={(e) => setNames(e.target.value)}
+            />
           </Stack>
         </>
       </DialogContent>

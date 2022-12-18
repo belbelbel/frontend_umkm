@@ -1,9 +1,13 @@
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Stack,
+  Step,
+  StepLabel,
+  Stepper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -14,14 +18,25 @@ import { Buttons } from "../Button/Button";
 
 interface DialogProps {
   id: number;
-  parent: string;
+  status: string;
   open: boolean;
   onClose: () => void;
 }
 
+const steps = [
+  "Pembayaran telah diverifikasi",
+  "Pemesanan sudah diproses penjual",
+  "Paket telah keluar dari gudang sortir",
+  "Paket telah sampai pada Gudang Hub",
+  "Paket telah keluar dari Gudang Hub menuju kota tujuan",
+  "Paket telah sampai pada Gerbang Sortir [Wakanda Gate-1]",
+  "Paket dikirim ke alamat tujuan",
+  "Paket diterima Ybs",
+];
+
 export const DialogDetailOrder: React.FC<DialogProps> = ({
   id,
-  parent,
+  status,
   open,
   onClose,
 }) => {
@@ -34,8 +49,12 @@ export const DialogDetailOrder: React.FC<DialogProps> = ({
         </Typography>
       </DialogTitle>
       <DialogContent sx={{ py: 3, px: 3 }}>
-        <>
-          <Stack direction="column" spacing={4}>
+        <Stack direction="column" spacing={3}>
+          <Stack
+            direction="column"
+            spacing={4}
+            sx={{ background: "#EFEFEF", p: 2 }}
+          >
             <Stack direction="row" spacing={30}>
               <Stack direction="column" spacing={1}>
                 {orderDetail?.details.map((i) => (
@@ -57,7 +76,23 @@ export const DialogDetailOrder: React.FC<DialogProps> = ({
               </Stack>
             </Stack>
           </Stack>
-        </>
+          <Box sx={{ maxWidth: 400 }}>
+            <Stepper
+              activeStep={
+                (status === "done" && 7) ||
+                (status === "sent" && 6) ||
+                (status === "paid" && 0)
+              }
+              orientation="vertical"
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ py: 3, px: 3 }}>
         <Buttons variation="contained" onClick={onClose}>

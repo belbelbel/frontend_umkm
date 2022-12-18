@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form, Formik } from "formik";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { CreateSellerAppBar } from "../../../../components/AppBar/CreateSellerAppBar";
@@ -58,7 +59,14 @@ export const ReviewPage = () => {
           <Stack direction="column" spacing={3}>
             {orderDetail?.details.map((i) => (
               <Stack direction="row" spacing={3} key={i.id}>
-                <Box sx={{ width: 150, height: 100, background: "#EFEFEF" }} />
+                {/* <Box sx={{ width: 150, height: 100, background: "#EFEFEF" }} /> */}
+                <Image
+                  src={i.produk.foto.map((i) => i.path_foto) + "?width=150"}
+                  alt="gambar produk"
+                  width={150}
+                  height={100}
+                  style={{ borderRadius: 10 }}
+                />
                 <Stack direction="column">
                   <Typography variant="body1">{i.produk.nama}</Typography>
                 </Stack>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import contoh from "../../../public/images/contoh.png";
+import myImageLoader from "../../modules/loaderImage";
 import { useProductDetailPublic } from "../../swr-cache/role-public/useProductDetailPublic";
 
 interface Props {
@@ -37,11 +38,15 @@ export const ProductCard: React.FC<Props> = ({
     >
       <Stack direction="column">
         <Image
-          src={contoh}
+          // loader={myImageLoader}
+          src={images + "?w=280"}
+          // fill
           alt="gambar produk"
+          width={280}
+          height={210}
           style={{
-            maxWidth: 280,
-            maxHeight: 210,
+            // width: 280,
+            // height: 210,
             borderRadius: 7,
             marginBottom: 5,
           }}

@@ -113,15 +113,11 @@ const UmkmDetail = () => {
           {productOwnerList?.map((i) => (
             <Grid item key={i.id}>
               <ProductOwnerCard
-                onClick={() =>
-                  router.push(
-                    `/seller/holding/${holdingId}/umkm/${umkmId}/seller-product/${i.id}`
-                  )
-                }
+                onClick={() => router.push(`/buyer/product/${i.id}`)}
                 nama_produk={i.nama}
                 harga={i.harga}
                 diskon={i.diskon}
-                // image={i.foto.map((j) => j.path_foto)}
+                image={i.foto.map((j) => j.path_foto)}
               />
             </Grid>
           ))}

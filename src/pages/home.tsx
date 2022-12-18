@@ -252,6 +252,7 @@ export const Home = () => {
                 nama={i.nama}
                 harga={i.harga}
                 diskon={i.diskon}
+                images={i.foto.map((i) => i.path_foto)}
               />
             </Grid>
           ))}

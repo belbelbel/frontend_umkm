@@ -286,13 +286,18 @@ export const CreateProduct = () => {
                         </>
                         <>
                           {index === 3 && (
-                            <TextField
-                              id="diskon"
-                              onChange={handleChange}
-                              value={values.diskon}
-                              onBlur={handleBlur}
-                              sx={{ marginTop: 3 }}
-                            />
+                            <Stack direction="row" spacing={2} alignItems="end">
+                              <TextField
+                                id="diskon"
+                                onChange={handleChange}
+                                value={values.diskon}
+                                onBlur={handleBlur}
+                                sx={{ marginTop: 3 }}
+                              />
+                              <Typography variant="body1" fontWeight={600}>
+                                %
+                              </Typography>
+                            </Stack>
                           )}
                           <Box sx={{ mb: 2, mt: 5 }}>
                             <div>

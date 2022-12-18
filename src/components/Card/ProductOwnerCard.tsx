@@ -34,11 +34,11 @@ export const ProductOwnerCard: React.FC<Props> = ({
     >
       <Stack direction="column">
         <Image
-          src={contoh}
+          src={image + `?w=280`}
           alt="gambar produk"
+          width={280}
+          height={210}
           style={{
-            maxWidth: 280,
-            maxHeight: 210,
             borderRadius: 7,
             marginBottom: 5,
           }}

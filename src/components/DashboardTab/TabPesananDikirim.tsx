@@ -40,7 +40,9 @@ export const TabPesananDikirim: React.FC<Props> = ({ value, index }) => {
           <Stack direction="column" spacing={2}>
             {listOrder?.map((i) => (
               <>
-                {i.review === null && i.review === "" && (
+                {i.status === "sent" ||
+                (i.status === "done" && i.review === "") ||
+                (i.status === "done" && i.review === null) ? (
                   <>
                     <Box
                       sx={{
@@ -96,6 +98,8 @@ export const TabPesananDikirim: React.FC<Props> = ({ value, index }) => {
                       </Stack>
                     </Box>
                   </>
+                ) : (
+                  ""
                 )}
               </>
             ))}
